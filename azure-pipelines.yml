@@ -1,0 +1,20 @@
+# https://docs.microsoft.com/azure/devops/pipelines/languages/docker
+
+pool:
+  vmImage: 'Ubuntu 16.04'
+
+variables:
+  backendDirectory: 'aware-api'
+  buildConfiguration: 'Release'
+  imageName: 'aware-api:$(Build.BuildId)'
+  registryName:  '$(dockerId).azurecr.io'
+  # dockerId and dockerPassword are defined in the Azure DevOps UI
+
+steps:
+- script: |
+    docker build -f Dockerfile -t $(registryName)/$(imageName) .
+    echo $pswd | docker login -u $(dockerId) --password-stdin $(registryName)
+    docker push $(registryName)/$(imageName)
+  displayName: 'build and release container'
+  env:
+    pswd: $(dockerPassword)

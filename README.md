@@ -1,6 +1,8 @@
 # aware-api
 Microsoft Hackathon: Azure Series
 
+[![Build Status](https://dev.azure.com/aware-devops/aware-api/_apis/build/status/CamiloGarciaLaRotta.aware-api)](https://dev.azure.com/aware-devops/aware-api/_build/latest?definitionId=2)
+
 ## Starting the API server
 - Development
   ```bash
