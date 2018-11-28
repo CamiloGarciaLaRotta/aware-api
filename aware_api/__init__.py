@@ -19,7 +19,7 @@ def create_app(cfg=None):
         Return a new ID that will subsequently used to store awareness information in the DB
         '''
         logger.info('GET')
-        return jsonify({'status': 'ok'}), 200
+        return jsonify({'status': 'ok', 'id':'42'}), 200
 
     @app.route('/api/process', methods=['POST'])
     def routes_get():
