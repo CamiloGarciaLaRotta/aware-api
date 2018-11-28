@@ -42,9 +42,11 @@ class DbClient:
     
     # Query per ID
     def GetItemById(self, id):
-        result_iterable = self.client.QueryItems(self.container['_self'], 'SELECT * FROM c WHERE c.id = "123"')
+        result_iterable = self.client.QueryItems(self.container['_self'], 'SELECT * FROM c WHERE c.id = "%s"'%(id))
         for item in iter(result_iterable):
             return item
+
+        return None
 
     # Creates a new Item
     def CreateItem(self, dbEntry):
