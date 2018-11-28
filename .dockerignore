@@ -1,0 +1,8 @@
+__pycache__
+.env
+.vscode
+.editorconfig
+.gitignore
+LICENSE
+README.nd
+run.py
