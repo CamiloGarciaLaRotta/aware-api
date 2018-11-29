@@ -64,7 +64,7 @@ def create_app(cfg=None):
         id = payload['id']
         image = payload['image']
 
-        logger.info(f'POST /api/process {id}')
+        # logger.info(f'POST /api/process {id}')
 
         # fetch client record and init results
         dbEntry = client.GetItemById(id)
