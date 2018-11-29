@@ -14,24 +14,24 @@ def create_app(cfg=None):
     load_config(app, cfg)
     CORS(app)
     logger = logging.getLogger('waitress')
-    logger.setLevel(logging.INFO)
+    logging.basicConfig(level=logging.INFO,format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 
     # create a database client
     client = DbClient(app.config)
 
     # download assets
     download_assets(app.config)
-    
+
     # load services
     sleepyRecognizer = SleepyRecognizer()
-    
+
     # from models import ...
     @app.route('/api/register', methods=['GET'])
     def register():
         '''
         Return a new ID that will subsequently used to store awareness information in the DB
         '''
-        logger.info('GET')
+        logger.info('GET /api/register')
         id = uuid.uuid4()
         client.CreateItem({'id': str(id)})
         return jsonify({'status': 'ok', 'id':id}), 200
@@ -60,8 +60,11 @@ def create_app(cfg=None):
             error = {'status' : 'error', 'error': missing_image_message}
             return jsonify(error), 400
 
+
         id = payload['id']
         image = payload['image']
+
+        logger.info(f'POST /api/process {id}')
 
         # fetch client record and init results
         dbEntry = client.GetItemById(id)
@@ -111,7 +114,7 @@ def download_assets(config):
 
         print('Downloading ',  name, '...')
         r = requests.get(url)
-        with open(path, 'wb') as f:  
+        with open(path, 'wb') as f:
             f.write(r.content)
         print('Finished Downloading: ',  name)
 
