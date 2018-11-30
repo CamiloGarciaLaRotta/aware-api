@@ -1,4 +1,5 @@
 import azure.cosmos.cosmos_client as cosmos_client
+import asyncio
 
 '''
     DbClient for connectign to azure cosmos
@@ -53,8 +54,11 @@ class DbClient:
         return self.client.CreateItem(self.container['_self'], dbEntry)
 
     # Upsert an Item
-    def UpsertItem(self, dbEntry):
-        return self.client.UpsertItem(self.container['_self'], dbEntry)
+    async  def UpsertItem(self, dbEntry):
+        return  await self.UpsertItemAsync(dbEntry)
+
+    async def UpsertItemAsync(self, dbEntry):
+       self.client.UpsertItem(self.container['_self'], dbEntry)
 
     # Delete an Item
     def DeleteItem(self, dbEntry):
