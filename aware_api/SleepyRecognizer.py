@@ -62,7 +62,6 @@ class SleepyRecognizer:
         # loop over the face detections
         # TODO: can be modified to return multiple faces
         ear = -1
-        results = []
         for rect in rects:
             # determine the facial landmarks for the face region, then
             # convert the facial landmark (x, y)-coordinates to a NumPy
@@ -80,5 +79,4 @@ class SleepyRecognizer:
             ear = (leftEAR + rightEAR) / 2.0
 
             # Print the first result
-            results.append(ear)
-        return ear
+            return [ear]
