@@ -32,9 +32,9 @@ def create_app(cfg=None):
         Return a new ID that will subsequently used to store awareness information in the DB
         '''
         logger.info('GET /api/register')
-        id = uuid.uuid4()
-        client.CreateItem({'id': str(id)})
-        return jsonify({'status': 'ok', 'id':id}), 200
+        userID = uuid.uuid4()
+        client.CreateItem({'id': str(userID)})
+        return jsonify({'status': 'ok', 'id':userID}), 200
 
     @app.route('/api/process', methods=['POST'])
     def routes_get():
@@ -61,16 +61,19 @@ def create_app(cfg=None):
             return jsonify(error), 400
 
 
-        id = payload['id']
-        image = payload['image']
+        userID = str(payload['id'])
+        image = str(payload['image'])
+
+        logger.info(userID)
+        logger.info(image[:10])
 
         # logger.info(f'POST /api/process {id}')
 
         # fetch client record and init results
-        dbEntry = client.GetItemById(id)
+        dbEntry = client.GetItemById(userID)
 
         if(dbEntry == None):
-            missing_client_record_message = 'client with id ' + id + ' does not exists'
+            missing_client_record_message = 'client with id ' + userID + ' does not exists'
             return jsonify({'status': 'error', 'error': missing_client_record_message}), 200
         if('Transactions'  not in dbEntry):
             dbEntry['Transactions'] = []
