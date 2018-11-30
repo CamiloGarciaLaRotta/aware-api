@@ -36,7 +36,7 @@ class SleepyRecognizer:
 
     # expects input in base64
     def recognize(self, picture):
-        # constant for eye aspect ratio 
+        # constant for eye aspect ratio
         EYE_AR_THRESH = 0.3
 
         # initialize dlib's face detector (HOG-based) and then create
@@ -61,6 +61,7 @@ class SleepyRecognizer:
 
         # loop over the face detections
         # TODO: can be modified to return multiple faces
+        ear = -1
         results = []
         for rect in rects:
             # determine the facial landmarks for the face region, then

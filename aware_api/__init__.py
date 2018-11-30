@@ -74,13 +74,19 @@ def create_app(cfg=None):
 
         if(dbEntry == None):
             missing_client_record_message = 'client with id ' + userID + ' does not exists'
-            return jsonify({'status': 'error', 'error': missing_client_record_message}), 200
+            return jsonify({'status': 'error', 'error': missing_client_record_message}), 400
         if('Transactions'  not in dbEntry):
             dbEntry['Transactions'] = []
 
+
+        sleepy_percentage = sleepyRecognizer.recognize(image)
         # process image
         results = {}
-        results['Sleepy'] = sleepyRecognizer.recognize(image)
+        if(sleepy_percentage == -1):
+            missing_face_message = 'Picture contained no face'
+            return jsonify({'status': 'error', 'error': missing_face_message}), 400
+
+        results['Sleepy'] = sleepy_percentage
 
         # save results
         dbEntry['Transactions'].append(results)
