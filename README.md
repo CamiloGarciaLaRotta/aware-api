@@ -5,6 +5,25 @@ Microsoft Hackathon: Azure Series
 
 This repository contains the RESTful Aware's API server.
 
+# Tech Stack
+- Flask
+- Docker
+- OpenCV
+- Azure Image Recognition
+- Azure DevOps
+- Azure Container Registry
+- Azure App Service
+- Azure CosmosDB
+
+# The Release Pipeline
+![Architecture](https://i.imgur.com/IZ9VQNl.jpg)
+1.  `Azure DevOps` fetches the latest commit to master from Aware's GitHub repo. It will build and test the source code.
+2. If succesful, `DevOps` will then build a Docker image of the web api and push it to the `Azure Container Registry`.
+3. After succesfully releasing the docker image, `DevOps` will deploy the web api via `Azure App Service`.
+4. `Azure App Services` will fetch the corresponding image from the `Container Registry` and make it available online.
+5. The mobile client can then access Aware's API through the web.
+`
+
 ## Starting the API server
 - Development
   ```bash
@@ -27,22 +46,3 @@ This repository contains the RESTful Aware's API server.
             localhost:8000/api
     ```
 - When you are done you can shutdown the api with `ctrl-C`
-
-# Tech Stack
-- Flask
-- Docker
-- OpenCV
-- Azure Image Recognition
-- Azure DevOps
-- Azure Container Registry
-- Azure App Service
-- Azure CosmosDB
-
-# The Release Pipeline
-![Architecture](https://i.imgur.com/IZ9VQNl.jpg)
-1.  `Azure DevOps` fetches the latest commit to master from Aware's GitHub repo. It will build and test the source code.
-2. If succesful, `DevOps` will then build a Docker image of the web api and push it to the `Azure Container Registry`.
-3. After succesfully releasing the docker image, `DevOps` will deploy the web api via `Azure App Service`.
-4. `Azure App Services` will fetch the corresponding image from the `Container Registry` and make it available online.
-5. The mobile client can then access Aware's API through the web.
-`
